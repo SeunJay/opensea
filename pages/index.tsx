@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { useWeb3 } from "@3rdweb/hooks";
+import toast, { Toaster } from "react-hot-toast";
 
 import Header from "../components/Header";
 import Hero from "../components/Hero";
@@ -23,6 +24,18 @@ interface IuserDoc {
 const Home: NextPage = () => {
   const { address, connectWallet } = useWeb3();
 
+  const welcomeUser = (userName: string, toastHandler = toast) => {
+    toastHandler.success(
+      `Welcome back${userName !== "Unnamed" ? ` ${userName}` : ""}!`,
+      {
+        style: {
+          background: "#04111d",
+          color: "#fff",
+        },
+      }
+    );
+  };
+
   useEffect(() => {
     if (!address) return;
 
@@ -36,7 +49,7 @@ const Home: NextPage = () => {
     const addUserToSanityDB = async (userDoc: IuserDoc) => {
       const result = await client.createIfNotExists(userDoc);
 
-      console.log(result);
+      welcomeUser(result.userName);
     };
 
     addUserToSanityDB(userDoc);
@@ -45,6 +58,7 @@ const Home: NextPage = () => {
   return (
     <>
       <div className={style.wrapper}>
+        <Toaster position="top-center" reverseOrder={false} />
         {address ? (
           <>
             <Header />
