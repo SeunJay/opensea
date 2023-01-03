@@ -4,7 +4,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 import Header from "../components/Header";
 import Hero from "../components/Hero";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { client } from "../lib/sanityClient";
 
 const style = {
@@ -23,6 +23,8 @@ interface IuserDoc {
 
 const Home: NextPage = () => {
   const { address, connectWallet } = useWeb3();
+
+  const isMountedRef = useRef(false);
 
   const welcomeUser = (userName: string, toastHandler = toast) => {
     toastHandler.success(
@@ -52,7 +54,13 @@ const Home: NextPage = () => {
       welcomeUser(result.userName);
     };
 
-    addUserToSanityDB(userDoc);
+    if (!isMountedRef.current) {
+      addUserToSanityDB(userDoc);
+
+      return () => {
+        isMountedRef.current = true;
+      };
+    }
   }, [address]);
 
   return (

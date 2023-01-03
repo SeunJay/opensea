@@ -41,7 +41,7 @@ const Header = () => {
       </div>
 
       <div className={style.headerItems}>
-        <Link href={"/collections/0x08d47f85bd50CfD114F4cA4b4CdD218c77e570B1"}>
+        <Link href={"/collections/0x79c386C391a35950Fef6f6083eef36b5709b55be"}>
           <div className={style.headerItem}>Collections</div>
         </Link>
         <div className={style.headerItem}>Stats</div>
