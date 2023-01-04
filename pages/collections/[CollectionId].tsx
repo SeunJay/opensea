@@ -8,6 +8,35 @@ import { AiOutlineInstagram, AiOutlineTwitter } from "react-icons/ai";
 import { HiDotsVertical } from "react-icons/hi";
 
 import Header from "../../components/Header";
+import NFTCard from "../../components/NFTCard";
+
+interface Collection {
+  id: string;
+  title: string;
+  volumeTraded: string;
+  contractAddress: string;
+  floorPrice: string;
+  description: string;
+  creator: string;
+  imageUrl: string;
+  bannerImageUrl: string;
+  allOwners: any[];
+}
+
+export interface NFT {
+  id: string;
+  image: string;
+  name: string;
+  background_color: string;
+  description: string;
+  external_url: string;
+  uri: string;
+}
+
+export interface Listing {
+  asset: NFT;
+  price?: number;
+}
 
 const style = {
   bannerImageContainer: `h-[20vh] w-screen overflow-hidden flex justify-center items-center`,
@@ -38,9 +67,9 @@ const Collection = () => {
   const router = useRouter();
   const CollectionId = router.query?.CollectionId as string;
 
-  const [collection, setCollection] = useState({});
-  const [NFTs, setNFTs] = useState<any[]>([]);
-  const [listings, setListings] = useState<any[]>([]);
+  const [collection, setCollection] = useState({} as Collection);
+  const [NFTs, setNFTs] = useState<NFT[]>([]);
+  const [listings, setListings] = useState<Listing[]>([]);
 
   const NFTModule = useMemo(() => {
     if (!provider) return;
@@ -83,7 +112,6 @@ const Collection = () => {
 
     (async () => {
       const listings = await marketplaceModule.getAllListings();
-
       setListings(listings);
     })();
   }, [marketplaceModule]);
@@ -104,7 +132,7 @@ const Collection = () => {
     try {
       const collectionData = await sanityClient.fetch(query);
 
-      console.log("data ", collectionData);
+      // console.log("data ", collectionData);
 
       setCollection(collectionData[0]);
     } catch (error) {
@@ -122,7 +150,132 @@ const Collection = () => {
     }
   }, [CollectionId]);
 
-  return <div>{CollectionId}</div>;
+  // console.log(collection.floorPrice);
+
+  return (
+    <div className="overflow-hidden">
+      <Header />
+
+      <div className={style.bannerImageContainer}>
+        <img
+          className={style.bannerImage}
+          src={
+            collection?.bannerImageUrl
+              ? collection?.bannerImageUrl
+              : "https://via.placeholder.com/200"
+          }
+          alt="banner"
+        />
+      </div>
+
+      <div className={style.infoContainer}>
+        <div className={style.midRow}>
+          <img
+            className={style.profileImg}
+            src={
+              collection?.imageUrl
+                ? collection?.imageUrl
+                : "https://via.placeholder.com/200"
+            }
+            alt="profile-image"
+          />
+        </div>
+
+        <div className={style.endRow}>
+          <div className={style.socialIconsContainer}>
+            <div className={style.socialIconsWrapper}>
+              <div className={style.socialIconsContent}>
+                <div className={style.socialIcon}>
+                  <CgWebsite />
+                </div>
+
+                <div className={style.divider}></div>
+                <div className={style.socialIcon}>
+                  <AiOutlineInstagram />
+                </div>
+
+                <div className={style.divider}></div>
+                <div className={style.socialIcon}>
+                  <AiOutlineTwitter />
+                </div>
+
+                <div className={style.divider}></div>
+                <div className={style.socialIcon}>
+                  <HiDotsVertical />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className={style.midRow}>
+          <div className={style.title}>{collection?.title}</div>
+        </div>
+
+        <div className={style.midRow}>
+          <div className={style.createdBy}>
+            Created By{" "}
+            <span className="text-[#2081e2]">{collection?.creator}</span>
+          </div>
+        </div>
+
+        <div className={style.midRow}>
+          <div className={style.statsContainer}>
+            <div className={style.collectionStat}>
+              <div className={style.statValue}>{NFTs.length}</div>
+              <div className={style.statName}>Items</div>
+            </div>
+
+            <div className={style.collectionStat}>
+              <div className={style.statValue}>
+                {collection?.allOwners ? collection?.allOwners.length : "0"}
+              </div>
+              <div className={style.statName}>Owners</div>
+            </div>
+
+            <div className={style.collectionStat}>
+              <div className={style.statValue}>
+                <img
+                  src="https://storage.opensea.io/files/6f8e2979d428180222796ff4a33ab929.svg"
+                  alt="eth"
+                  className={style.ethLogo}
+                />
+                {collection?.floorPrice}
+              </div>
+              <div className={style.statName}>Floor Price</div>
+            </div>
+
+            <div className={style.collectionStat}>
+              <div className={style.statValue}>
+                <img
+                  src="https://storage.opensea.io/files/6f8e2979d428180222796ff4a33ab929.svg"
+                  alt="eth"
+                  className={style.ethLogo}
+                />
+                {collection?.volumeTraded}.5k
+              </div>
+              <div className={style.statName}>Volume Traded</div>
+            </div>
+          </div>
+        </div>
+
+        <div className={style.midRow}>
+          <div className={style.description}>{collection?.description}</div>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap">
+        {NFTs.map((ntfItem, id) => (
+          <NFTCard
+            key={id}
+            nftItem={ntfItem}
+            title={collection?.title}
+            listings={listings}
+          />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default Collection;
