@@ -12,7 +12,7 @@ interface NFTCardProps {
 }
 
 const style = {
-  wrapper: `bg-[#303339] flex-auto w-[10rem] h-[30rem] my-10 mx-5 rounded-2xl overflow-hidden cursor-pointer`,
+  wrapper: `bg-[#303339] flex-auto w-[14rem] h-[22rem] my-10 mx-5 rounded-2xl overflow-hidden cursor-pointer`,
   imgContainer: `h-3/4 w-full overflow-hidden flex justify-center items-center`,
   nftImg: `w-full object-cover`,
   details: `p-3`,
