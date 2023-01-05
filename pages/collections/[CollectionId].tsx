@@ -102,7 +102,7 @@ const Collection = () => {
     );
 
     return sdk.getMarketplaceModule(
-      "0x797b5a6388849743dc7ec4E43923bd99EEeBCD04"
+      "0x05a92932E2d92A9aFfe2b316EC461f752171c152"
     );
   }, [provider]);
 

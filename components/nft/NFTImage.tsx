@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoMdSnow } from "react-icons/io";
 import { AiOutlineHeart } from "react-icons/ai";
 
@@ -15,6 +15,7 @@ const style = {
 };
 
 const NFTImage = ({ selectedNFT }: NFTImageProps) => {
+
   return (
     <>
       <div className={style.topBar}>
@@ -27,7 +28,7 @@ const NFTImage = ({ selectedNFT }: NFTImageProps) => {
         </div>
       </div>
       <div className="">
-        <img src={selectedNFT?.image} alt="" />
+        <img src={selectedNFT.image} alt="" />
       </div>
     </>
   );

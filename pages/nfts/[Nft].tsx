@@ -5,9 +5,10 @@ import { ThirdwebSDK } from "@3rdweb/sdk";
 
 import Header from "../../components/Header";
 import NFTImage from "../../components/nft/NFTImage";
-import { NFT } from "../collections/[CollectionId]";
+import { Listing, NFT } from "../collections/[CollectionId]";
 import GeneralDetails from "../../components/nft/GeneralDetails";
 import ItemActivity from "../../components/nft/ItemActivity";
+import Purchase from "../../components/nft/Purchase";
 
 const style = {
   wrapper: `flex flex-col items-center container-lg text-[#e5e8eb]`,
@@ -21,7 +22,9 @@ const Nft = () => {
   const router = useRouter();
   const { provider } = useWeb3();
   const [selectedNFT, setSelectedNFT] = useState({} as NFT);
-  const [listings, setListings] = useState();
+  const [listings, setListings] = useState<Listing[]>([]);
+
+  const isListed = router.query.isListed as string;
 
   const NFTModule = useMemo(() => {
     if (!provider) return;
@@ -31,7 +34,7 @@ const Nft = () => {
       "https://eth-goerli.g.alchemy.com/v2/iSWp-fXs_yuGC3lyL8TYMC60YWW226EL"
     );
 
-    return sdk.getNFTModule("0x79c386C391a35950Fef6f6083eef36b5709b55be");
+    return sdk.getNFTModule("0x61ddDBa0bd02d5f6C6B54f11Cfd68e9750408840");
   }, [provider]);
 
   // get all NFTs in the collection
@@ -41,7 +44,9 @@ const Nft = () => {
     (async () => {
       const nfts = await NFTModule.getAll();
 
-      const selectedNFT = nfts.find((nft) => nft.id === router.query.Nft);
+      const selectedNFT = nfts.find(
+        (nft) => nft.id === router.query.Nft
+      ) as NFT;
 
       setSelectedNFT(selectedNFT);
     })();
@@ -56,7 +61,7 @@ const Nft = () => {
     );
 
     return sdk.getMarketplaceModule(
-      "0x797b5a6388849743dc7ec4E43923bd99EEeBCD04"
+      "0x05a92932E2d92A9aFfe2b316EC461f752171c152"
     );
   }, [provider]);
 
@@ -82,6 +87,12 @@ const Nft = () => {
 
             <div className={style.detailsContainer}>
               <GeneralDetails selectedNFT={selectedNFT} />
+              <Purchase
+                isListed={isListed}
+                selectedNft={selectedNFT}
+                listings={listings}
+                marketPlaceModule={marketplaceModule}
+              />
             </div>
           </div>
           <ItemActivity />
