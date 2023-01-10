@@ -34,7 +34,7 @@ const Nft = () => {
       "https://eth-goerli.g.alchemy.com/v2/iSWp-fXs_yuGC3lyL8TYMC60YWW226EL"
     );
 
-    return sdk.getNFTModule("0x61ddDBa0bd02d5f6C6B54f11Cfd68e9750408840");
+    return sdk.getNFTModule("0x8f62D6a14Ea9cCA3779b120B7a096294e0e2ff0b");
   }, [provider]);
 
   // get all NFTs in the collection
@@ -61,7 +61,7 @@ const Nft = () => {
     );
 
     return sdk.getMarketplaceModule(
-      "0x05a92932E2d92A9aFfe2b316EC461f752171c152"
+      "0xC9737e07aFD576b651528284E4E6BE4f841d28d7"
     );
   }, [provider]);
 

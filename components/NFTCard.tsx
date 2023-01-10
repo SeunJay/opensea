@@ -43,6 +43,8 @@ const NFTCard = ({ nftItem, title, listings }: NFTCardProps) => {
     }
   }, [listings, nftItem]);
 
+  console.log("id ", nftItem);
+
   return (
     <div
       className={style.wrapper}

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { HiTag } from "react-icons/hi";
 import { IoMdWallet } from "react-icons/io";
 import toast, { Toaster } from "react-hot-toast";
+import { BigNumber, BigNumberish } from "ethers";
 import { Listing, NFT } from "../../pages/collections/[CollectionId]";
 
 const style = {
@@ -36,19 +37,21 @@ const Purchase = ({
   const [enableButton, setEnableButton] = useState(false);
   const [lists] = useState(listings);
 
+  // console.log(selectedNft.id);
+  // console.log(lists);
+
   useEffect(() => {
     if (!listings || isListed === "false") return;
 
     (async () => {
-      const selectedMarketNft = lists.find(
+      const selectedMarketNft = listings.find(
         (marketNft) => marketNft.asset?.id === selectedNft.id
       );
-      setSelectedMarketNft((prevProps) => ({
-        ...prevProps,
-        selectedMarketNft,
-      }));
+
+      // console.log("match ", selectedMarketNft);
+      setSelectedMarketNft(selectedMarketNft);
     })();
-  }, [selectedNft, listings, isListed]);
+  }, [selectedNft, lists, isListed]);
 
   useEffect(() => {
     if (!selectedMarketNft || !selectedNft) return;
@@ -59,19 +62,19 @@ const Purchase = ({
   // console.log(selectedMarketNft);
 
   const buyItem = async (
-    listingId = selectedNft.id,
+    listingId = selectedNft?.id,
     quantityDesired = 1,
     module = marketPlaceModule
   ) => {
-    console.log(listingId, quantityDesired, module, "david");
+    // console.log(listingId, quantityDesired, module, "david");
 
-    console.log("module ", module);
+    // console.log("module ", module);
 
     try {
-      // await module.buyoutDirectListing({
-      //   listingId: listingId,
-      //   quantityDesired: quantityDesired,
-      // });
+      await module.buyoutListing({
+        listingId: BigNumber.from(listingId),
+        // quantityDesired: BigNumber.from(quantityDesired),
+      });
 
       confirmPurchase();
     } catch (error) {
@@ -81,11 +84,11 @@ const Purchase = ({
   return (
     <div className="flex h-20 w-full items-center rounded-lg border border-[#151c22] bg-[#303339] px-12">
       <Toaster position="bottom-left" reverseOrder={false} />
-      {isListed === "true" ? (
+      {isListed === "true" && selectedMarketNft ? (
         <>
           <div
             onClick={() => {
-              enableButton ? buyItem(selectedMarketNft.id, 1) : null;
+              enableButton ? buyItem(selectedNft?.id, 1) : null;
             }}
             className={`${style.button} bg-[#2081e2] hover:bg-[#42a0ff]`}
           >

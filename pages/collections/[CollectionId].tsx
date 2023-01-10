@@ -102,7 +102,7 @@ const Collection = () => {
     );
 
     return sdk.getMarketplaceModule(
-      "0x05a92932E2d92A9aFfe2b316EC461f752171c152"
+      "0xC9737e07aFD576b651528284E4E6BE4f841d28d7"
     );
   }, [provider]);
 
@@ -115,6 +115,8 @@ const Collection = () => {
       setListings(listings);
     })();
   }, [marketplaceModule]);
+
+  console.log("listings ", listings);
 
   const fetchCollectionData = async (sanityClient = client) => {
     const query = `*[_type == "marketItems" && contractAddress == "${CollectionId}"]{
