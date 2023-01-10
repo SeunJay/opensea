@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "sanity.cli.js", "sanity.cli.js", "sanity.config.js", "sanity.config.js", "schemas/user.js", "schemas/user.js", "schemas/market.js", "schemas/market.js", "schemas/index.js", "schemas/index.js"],
   "exclude": ["node_modules"]
 }
