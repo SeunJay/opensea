@@ -31,6 +31,7 @@ export interface NFT {
   description: string;
   external_url: string;
   uri: string;
+  likes: string;
 }
 
 export interface Listing {

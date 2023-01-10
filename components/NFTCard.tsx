@@ -79,7 +79,7 @@ const NFTCard = ({ nftItem, title, listings }: NFTCardProps) => {
           <span className={style.likeIcon}>
             <BiHeart />
           </span>
-          {nftItem.likes}
+          {nftItem?.likes}
         </div>
       </div>
     </div>
