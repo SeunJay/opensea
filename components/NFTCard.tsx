@@ -39,6 +39,7 @@ const NFTCard = ({ nftItem, title, listings }: NFTCardProps) => {
 
     if (Boolean(listing)) {
       setIsListed(true);
+      // @ts-ignore
       setPrice(listing.buyoutCurrencyValuePerToken.displayValue);
     }
   }, [listings, nftItem]);

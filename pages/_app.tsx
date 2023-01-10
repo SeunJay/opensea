@@ -10,6 +10,7 @@ const connectors = {
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
+    // @ts-ignore
     <ThirdwebWeb3Provider
       supportedChainIds={supportedChainIds}
       connectors={connectors}

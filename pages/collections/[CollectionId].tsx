@@ -89,6 +89,7 @@ const Collection = () => {
     (async () => {
       const nfts = await NFTModule.getAll();
 
+      // @ts-ignore
       setNFTs(nfts);
     })();
   }, [NFTModule]);
@@ -112,6 +113,7 @@ const Collection = () => {
 
     (async () => {
       const listings = await marketplaceModule.getAllListings();
+      // @ts-ignore
       setListings(listings);
     })();
   }, [marketplaceModule]);

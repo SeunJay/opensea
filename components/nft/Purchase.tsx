@@ -49,6 +49,7 @@ const Purchase = ({
       );
 
       // console.log("match ", selectedMarketNft);
+      // @ts-ignore
       setSelectedMarketNft(selectedMarketNft);
     })();
   }, [selectedNft, lists, isListed]);

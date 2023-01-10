@@ -71,6 +71,7 @@ const Nft = () => {
 
     (async () => {
       const listings = await marketplaceModule.getAllListings();
+      // @ts-ignore
       setListings(listings);
     })();
   }, [marketplaceModule]);
