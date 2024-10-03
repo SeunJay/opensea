@@ -26,6 +26,12 @@ const Home: NextPage = () => {
 
   const isMountedRef = useRef(false);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      connectWallet("injected");
+    }
+  }, []);
+
   const welcomeUser = (userName: string, toastHandler = toast) => {
     toastHandler.success(
       `Welcome back${userName !== "Unnamed" ? ` ${userName}` : ""}!`,
@@ -76,7 +82,9 @@ const Home: NextPage = () => {
           <div className={style.walletConnectWrapper}>
             <button
               className={style.button}
-              onClick={() => connectWallet("injected")}
+              onClick={() => {
+                connectWallet("injected");
+              }}
             >
               Connect Wallet
             </button>
